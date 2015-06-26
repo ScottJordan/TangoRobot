@@ -1,7 +1,7 @@
 package RL;
 
 import pl.gdan.elsy.qconf.Action;
-import com.hoho.android.usbserial;
+
 /**
  * Created by scott on 6/26/15.
  */
