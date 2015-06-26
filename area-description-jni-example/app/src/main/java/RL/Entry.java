@@ -1,4 +1,4 @@
-package StateLogger;
+package RL;
 
 /**
  * Created by scott on 6/22/15.
@@ -8,23 +8,23 @@ public class Entry {
     private Orientation ori;
     private String status;
     private int frameCount;
-    private float deltaTime;
+    private long deltaTime;
 
-    public Entry(Position pos, Orientation ori, String status, int frameCount, float deltaTime) {
+    public Entry(Position pos, Orientation ori, String status, int frameCount, long deltaTime) {
         this.pos = pos;
         this.ori = ori;
         this.status = status;
         this.frameCount = frameCount;
         this.deltaTime = deltaTime;
     }
-    public Entry(String all) throws Exception {
+    public Entry(String all, long deltaTime) throws Exception {
         String idv[] = all.split(",");
         if(idv[0].contentEquals("N/A")){
             throw new Exception("NoHandleException");
         }
         this.status = idv[0];
         this.frameCount = Integer.parseInt(idv[1]);
-        this.deltaTime = Float.parseFloat(idv[2]);
+        this.deltaTime = deltaTime;
         this.pos = new Position(Float.parseFloat(idv[3]), //x
                                 Float.parseFloat(idv[4]), //y
                                 Float.parseFloat(idv[5]));//z
@@ -74,11 +74,11 @@ public class Entry {
         this.frameCount = frameCount;
     }
 
-    public float getDeltaTime() {
+    public long getDeltaTime() {
         return deltaTime;
     }
 
-    public void setDeltaTime(float deltaTime) {
+    public void setDeltaTime(long deltaTime) {
         this.deltaTime = deltaTime;
     }
 }

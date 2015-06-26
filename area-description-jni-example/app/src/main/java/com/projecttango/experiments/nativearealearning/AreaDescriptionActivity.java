@@ -39,7 +39,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import StateLogger.Logger;
+import RL.Logger;
+import RL.RLTaskManager;
 
 /**
  * Main activity shows area learning scene.
@@ -74,23 +75,15 @@ public class AreaDescriptionActivity extends Activity implements
   private float mTouchCurrentDist = 0.0f;
   private Point mScreenSize = new Point();
   private float mScreenDiagonalDist = 0.0f;
+  private RLTaskManager taskManager;
 
-  private Logger statelog;
-  private FileWriter logFileWriter;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    statelog = new Logger("state.log");
-    try {
-      File root = Environment.getExternalStorageDirectory();
-      File logfile = new File(root, statelog.getFile());
-      logFileWriter = new FileWriter(logfile);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    taskManager = new RLTaskManager();
+    taskManager.startScheduler();
+
     // Calculate screen width for touch interaction.
     Display display = getWindowManager().getDefaultDisplay();
     display.getSize(mScreenSize);
@@ -207,13 +200,7 @@ public class AreaDescriptionActivity extends Activity implements
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    try {
-      statelog.writeLog(logFileWriter);
-      logFileWriter.flush();
-      logFileWriter.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    taskManager.stopScheduler();
   }
 
   @Override
@@ -328,23 +315,5 @@ public class AreaDescriptionActivity extends Activity implements
     mDeviceToStartPoseTextView.setText(TangoJNINative.getPoseString(0));
     mDeviceToADFPoseTextView.setText(TangoJNINative.getPoseString(1));
     mStartToADFPoseTextView.setText(TangoJNINative.getPoseString(2));
-
-    try {
-      statelog.addEntry(TangoJNINative.getPoseStringMinimal(0));
-    } catch (Exception e) {
-      if(e.getMessage().contentEquals("NoHandleException")) {
-        ;
-      } else {
-        e.printStackTrace();
-      }
-    }
-    if(statelog.getLog().size() >= 1000){
-
-      try {
-        statelog.writeLog(logFileWriter);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
   }
 }

@@ -1,31 +1,29 @@
-package StateLogger;
+package RL;
 
 /**
  * Created by scott on 6/22/15.
  */
-public class Orientation {
+public class Position {
     private float x;
     private float y;
-    private float z;
-    private float w;
-
-    public Orientation() {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
-        this.w = 0;
-    }
-
-    public Orientation(float x, float y, float z, float w) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    }
 
     @Override
     public String toString() {
-        return x + "," + y + "," + z + "," + w;
+        return x + "," + y + "," + z;
+    }
+
+    private float z;
+
+    public Position (){
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+    }
+
+    public Position(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public float getX() {
@@ -50,13 +48,5 @@ public class Orientation {
 
     public void setZ(float z) {
         this.z = z;
-    }
-
-    public float getW() {
-        return w;
-    }
-
-    public void setW(float w) {
-        this.w = w;
     }
 }
