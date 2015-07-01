@@ -18,13 +18,14 @@ package com.projecttango.experiments.nativearealearning;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Point;
+import android.hardware.usb.UsbManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,13 +35,8 @@ import android.widget.Toast;
 
 import com.projecttango.experiments.nativearealearning.SetADFNameDialog.SetNameAndUUIDCommunicator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import RL.Logger;
 import RL.RLTaskManager;
+import USBComm.ArduinoCommunicator;
 
 /**
  * Main activity shows area learning scene.
@@ -80,8 +76,9 @@ public class AreaDescriptionActivity extends Activity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
-    taskManager = new RLTaskManager();
+    taskManager = new RLTaskManager(usbManager);
     taskManager.startScheduler();
 
     // Calculate screen width for touch interaction.
@@ -176,6 +173,7 @@ public class AreaDescriptionActivity extends Activity implements
   protected void onResume() {
     super.onResume();
     mGLView.onResume();
+
     TangoJNINative.setupConfig(mIsLearning, mIsUsingADF);
     if (mIsUsingADF) {
       mADFUUIDTextView.setText("Number of ADFs: " + String.valueOf(TangoJNINative.getADFCount()) + 

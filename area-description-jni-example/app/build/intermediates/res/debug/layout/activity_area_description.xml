@@ -206,4 +206,4 @@
         android:layout_alignParentLeft="true"
         android:text="Save ADF" />
 
-</RelativeLayout><!-- From: file:/home/scott/AndroidStudioProjects/area-description-jni-example/app/src/main/res/layout/activity_area_description.xml -->
+</RelativeLayout><!-- From: file:/home/scott/AndroidStudioProjects/TangoRobot/area-description-jni-example/app/src/main/res/layout/activity_area_description.xml -->

@@ -42,4 +42,4 @@
         android:layout_below="@+id/uuidDisplay"
         android:text="@string/ok" />
 
-</RelativeLayout><!-- From: file:/home/scott/AndroidStudioProjects/area-description-jni-example/app/src/main/res/layout/set_name_dialog.xml -->
+</RelativeLayout><!-- From: file:/home/scott/AndroidStudioProjects/TangoRobot/area-description-jni-example/app/src/main/res/layout/set_name_dialog.xml -->
