@@ -15,16 +15,18 @@ public class Entry {
     private int leftMotorAction;
     private int rightMotorAction;
     private double reward;
+    private double rewardState;
     private long deltaTime;
 
     public Entry(RobotState robotState, long deltaTime) {
-        pos = robotState.getPosition();
-        ori = robotState.getOrientation();
-        leftMotor = robotState.getMotorLeft();
-        rightMotor = robotState.getMotorRight();
-        leftMotorAction = robotState.getMotorLeftAction();
-        rightMotorAction = robotState.getMotorRightAction();
+        this.pos = robotState.getPosition();
+        this.ori = robotState.getOrientation();
+        this.leftMotor = robotState.getMotorLeft();
+        this.rightMotor = robotState.getMotorRight();
+        this.leftMotorAction = robotState.getMotorLeftAction();
+        this.rightMotorAction = robotState.getMotorRightAction();
         this.reward = robotState.getReward();
+        this.rewardState = robotState.getRewardState();
         this.deltaTime = deltaTime;
     }
 
@@ -37,7 +39,8 @@ public class Entry {
                 rightMotor + "," +
                 leftMotorAction + "," +
                 rightMotorAction + "," +
-                reward + "," +
+                rewardState + "," +
+                reward +
                 "\n";
     }
 

@@ -1,5 +1,7 @@
 package RL;
 
+import android.util.Log;
+
 import com.projecttango.experiments.nativearealearning.TangoJNINative;
 
 
@@ -21,6 +23,9 @@ public class RobotState {
     private static int motorLeftAction = 0;
     private static int motorRightAction = 0;
 
+    private static int rewardState = 0;
+    private static int lapCounter = 0;
+
     private RobotState() {
         update();
     }
@@ -28,17 +33,41 @@ public class RobotState {
     public void update() {
         updatePose();
         calcReward();
+        Log.v("Cycle", "Reward = " + reward + " Y pos = " + position.getY());
     }
 
     private void calcReward() {
-        reward = 0;
+        if (rewardState == 0) {
+            if (position.getY() < .75) {
+                reward = 1000 - (int) ((Math.abs(.75 - position.getY()) / 1.5) * 1000.0);
+            } else if (position.getY() >= .75) {
+                reward = 1000;
+                rewardState = 1;
+            } else {
+                reward = 0;
+            }
+        } else if (rewardState == 1) {
+            if (position.getY() > -.75) {
+                reward = 1000 - (int) ((Math.abs(-.75 - position.getY()) / 1.5) * 1000.0);
+                rewardState = 0;
+                lapCounter++;
+            } else if (position.getY() <= -.75) {
+                reward = 1000;
+                rewardState = 0;
+                lapCounter++;
+            } else {
+                reward = 0;
+            }
+        }
     }
 
     public void updatePose() {
         String posString = TangoJNINative.getPoseStringMinimal(0);
         String idv[] = posString.split(",");
-        if (idv[0].contentEquals("N/A")) {
+        if (idv[3].contentEquals("N/A")) {
             position = new Position(0, 0, 0);
+            orientation = new Orientation(0, 0, 0, 0);
+            return;
         }
         position = new Position(Float.parseFloat(idv[3]), //x
                 Float.parseFloat(idv[4]), //y
@@ -59,6 +88,15 @@ public class RobotState {
         motorRight = motorRightAction;
         motorRightAction = 0;
         motorLeftAction = 0;
+    }
+
+    public void reset() {
+        updatePose();
+        motorLeft = 0;
+        motorRight = 0;
+        reward = 0;
+        rewardState = 0;
+        ourInstance = this;
     }
 
     public Position getPosition() {
@@ -115,5 +153,13 @@ public class RobotState {
 
     public void setMotorRightAction(int motorRightAction) {
         this.motorRightAction = motorRightAction;
+    }
+
+    public int getLapCounter() {
+        return lapCounter;
+    }
+
+    public int getRewardState() {
+        return rewardState;
     }
 }

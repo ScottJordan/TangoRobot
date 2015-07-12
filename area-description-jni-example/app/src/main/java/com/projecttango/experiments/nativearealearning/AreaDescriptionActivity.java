@@ -79,7 +79,7 @@ public class AreaDescriptionActivity extends Activity implements
     UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
     taskManager = new RLTaskManager(usbManager);
-    taskManager.startScheduler();
+
 
     // Calculate screen width for touch interaction.
     Display display = getWindowManager().getDefaultDisplay();
@@ -167,6 +167,7 @@ public class AreaDescriptionActivity extends Activity implements
         }
       }
     }).start();
+    taskManager.startScheduler();
   }
 
   @Override

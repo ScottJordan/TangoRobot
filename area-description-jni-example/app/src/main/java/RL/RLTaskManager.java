@@ -2,6 +2,7 @@ package RL;
 
 import android.hardware.usb.UsbManager;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class RLTaskManager implements Runnable {
     private RobotState robotState;
     private RobotBrain robotBrain;
     private ArduinoCommunicator communicator;
-    private static final long delayPeriod = 25;
+    private static final long initialDelay = 5000;
+    private static final long delayPeriod = 50;
     private static final String brainFilename = "BrainWeights.nn";
     private static final String predFilename = "PredWeights.nn";
 
@@ -30,15 +32,15 @@ public class RLTaskManager implements Runnable {
         communicator = new ArduinoCommunicator(manager);
         RobotState.getInstance().update();
         RobotPlayerPerception robotPerception = new RobotPlayerPerception(false, RobotState.getInstance());
-        int hiddenNo[] = new int[]{9};
-        int hiddenPredNo[] = new int[]{15};
-        double alpha = 0.1;
+        int hiddenNo[] = new int[]{5};
+        int hiddenPredNo[] = new int[]{5};
+        double alpha = 0.01;
         double lambda = 0.9;
-        double gamma = 0.99;
-        double random = 0.1;
-        double maxWeight = 1.0;
+        double gamma = 0.9;
+        double random = 0.15;
+        double maxWeight = 0.9;
         robotBrain = new RobotBrain(robotPerception, MotorAction.generateCommands(communicator),
-                hiddenNo, hiddenPredNo, alpha, lambda, gamma, false, 0.0, random, maxWeight);
+                hiddenNo, hiddenPredNo, alpha, lambda, gamma, true, 0.0, random, maxWeight);
         loadBrainNet(brainFilename);
         loadPredNet(predFilename);
         scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -46,11 +48,15 @@ public class RLTaskManager implements Runnable {
     }
 
     public void startScheduler(){
-        scheduler.scheduleAtFixedRate(this, 0, delayPeriod, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(this, initialDelay, delayPeriod, TimeUnit.MILLISECONDS);
     }
     public void stopScheduler(){
         scheduler.shutdown();
+        MotorAction action = new MotorAction(0, 0, communicator);
+        action.execute();
+        logger.writeLog();
         logger.writeLogEndEpisode();
+        robotState.reset();
         saveBrainNet(brainFilename);
         savePredNet(predFilename);
     }
@@ -59,10 +65,18 @@ public class RLTaskManager implements Runnable {
     public void run() {
         robotState = RobotState.getInstance();
         robotState.update();
+        Log.v("Cycle", "Updated Pose");
         robotBrain.count();
+        Log.v("Cycle", "Ran Learning cycle");
         robotState.setAction(robotBrain.getMotorAction());
         logger.log(robotState);
+        if (robotState.getLapCounter() >= 3) {
+            stopScheduler();
+            return;
+        }
+
         robotBrain.executeAction();
+        Log.v("Cycle", "Executed Actions");
         robotState.updateMotors();
     }
 

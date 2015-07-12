@@ -57,16 +57,16 @@ public class MotorAction extends Action {
     }
 
     public static MotorAction[] generateCommands(ArduinoCommunicator communicator) {
-        MotorAction actions[] = new MotorAction[9];
-        actions[0] = new MotorAction(0, 0, communicator);
-        actions[1] = new MotorAction(-30, 0, communicator);
-        actions[2] = new MotorAction(30, 0, communicator);
-        actions[3] = new MotorAction(0, -30, communicator);
-        actions[4] = new MotorAction(0, 30, communicator);
-        actions[5] = new MotorAction(-30, -30, communicator);
-        actions[6] = new MotorAction(30, 30, communicator);
-        actions[7] = new MotorAction(-30, 30, communicator);
-        actions[8] = new MotorAction(30, -30, communicator);
+        MotorAction actions[] = new MotorAction[2];
+//        actions[0] = new MotorAction(0, 0, communicator);
+//        actions[1] = new MotorAction(-30, 0, communicator);
+//        actions[2] = new MotorAction(30, 0, communicator);
+//        actions[3] = new MotorAction(0, -30, communicator);
+//        actions[4] = new MotorAction(0, 30, communicator);
+        actions[0] = new MotorAction(-15, -15, communicator);
+        actions[1] = new MotorAction(15, 15, communicator);
+//        actions[7] = new MotorAction(-30, 30, communicator);
+//        actions[8] = new MotorAction(30, -30, communicator);
         return actions;
     }
 }

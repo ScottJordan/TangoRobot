@@ -60,7 +60,7 @@ public class Logger {
     public void writeLogStartEpisode() {
         try {
             FileWriter logFileWriter = new FileWriter(logfile, true);
-            logFileWriter.write("Start Episode");
+            logFileWriter.write("Start Episode\n");
             logFileWriter.flush();
             logFileWriter.close();
         } catch (IOException e) {
@@ -71,14 +71,15 @@ public class Logger {
     public void writeLogEndEpisode() {
         try {
             FileWriter logFileWriter = new FileWriter(logfile, true);
-            logFileWriter.write("End Episode");
+            logFileWriter.write("End Episode\n");
             logFileWriter.flush();
             logFileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void writeLog() throws IOException {
+
+    public void writeLog() {
         try {
             FileWriter logFileWriter = new FileWriter(logfile, true);
             for(Entry ent: log) {
@@ -86,12 +87,14 @@ public class Logger {
             }
             logFileWriter.flush();
             logFileWriter.close();
+            log.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
     }
+
     public String getFile() {
         return file;
     }
@@ -112,12 +115,7 @@ public class Logger {
         addEntry(robotState);
         //write log to file
         if(log.size() >= 1000){
-            try {
-                writeLog();
-                log.clear();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeLog();
         }
 
     }

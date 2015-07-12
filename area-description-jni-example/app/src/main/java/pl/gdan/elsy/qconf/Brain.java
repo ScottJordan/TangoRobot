@@ -1,5 +1,7 @@
 package pl.gdan.elsy.qconf;
 
+import android.util.Log;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Random;
 
 import pl.gdan.elsy.tool.Mat;
 import pl.gdan.elsy.tool.RR;
@@ -107,7 +111,7 @@ public class Brain implements Serializable {
     private int executionResult;
     private int[] neuronsNo;
     private double[][][] wBackup;
-
+    private static Random rand = new Random(new Date().getTime());
     /**
      * @param perception      an instance of class extending Perception
      * @param actionsArray    array of actions that can be taken
@@ -209,7 +213,9 @@ public class Brain implements Serializable {
         int a = -1;
         Qmax = -1;
         propagate();
+        String qvals = "Q values for actions: ";
         for (int i = 0; i < Q.length; i++) {
+            qvals += Q[i] + " ";
             if (useBoltzmann) {
                 boltzValues[i] = Math.exp(Q[i] / temperature);
             }
@@ -218,6 +224,8 @@ public class Brain implements Serializable {
                 Qmax = Q[a];
             }
         }
+        qvals += "\n";
+        Log.v("Actions", qvals);
         //int aMax = a;
         if (useBoltzmann) {
             a = RR.pickBestIndex(boltzValues);
@@ -229,8 +237,13 @@ public class Brain implements Serializable {
 			}
 			System.out.println("a(" + a + ") != aMax(" + aMax + ") " + qstr);
 		}*/
-        if (randActions != 0 && Rand.successWithPercent(randActions)) {
+
+        /*if (randActions != 0 && Rand.successWithPercent(randActions)) {
             a = Rand.i(Q.length);
+        }*/
+        double roll = (double) rand.nextInt(101) / 100.0;
+        if (randActions > 0 && roll <= randActions) {
+            a = rand.nextInt(Q.length);
         }
         Qmax = Q[a];
         return a;
@@ -321,6 +334,7 @@ public class Brain implements Serializable {
                 }
             }
         }
+        //Q = activation[activation.length - 1];// added to update Q since it wasn't being updated anywhere
     }
 
     /**

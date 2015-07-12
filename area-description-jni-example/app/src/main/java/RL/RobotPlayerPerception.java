@@ -37,15 +37,16 @@ public class RobotPlayerPerception extends Perception {
                 setNextValue(0);
             }
         }
-        setNextValue(robotState.getPosition().getX());
+//        setNextValue(robotState.getPosition().getX());
         setNextValue(robotState.getPosition().getY());
-        setNextValue(robotState.getPosition().getZ());
-        setNextValue(robotState.getOrientation().getX());
-        setNextValue(robotState.getOrientation().getY());
-        setNextValue(robotState.getOrientation().getZ());
-        setNextValue(robotState.getOrientation().getW());
+//        setNextValue(robotState.getPosition().getZ());
+//        setNextValue(robotState.getOrientation().getX());
+//        setNextValue(robotState.getOrientation().getY());
+//        setNextValue(robotState.getOrientation().getZ());
+//        setNextValue(robotState.getOrientation().getW());
         setNextValue(robotState.getMotorLeft());
         setNextValue(robotState.getMotorRight());
+        setNextValue(robotState.getRewardState());
     }
 
     public void start() {
