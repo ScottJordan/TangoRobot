@@ -1,0 +1,27 @@
+import socket               # Import socket module
+import time
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # Create a socket object
+host = "192.168.0.29" # Get local machine IP
+port = 9999                # Reserve a port for your service.
+soc.bind((host, port))       # Bind to the port
+soc.listen(5)                 # Now wait for client connection.
+numMes = 0
+
+	
+while True:
+	conn, addr = soc.accept()     # Establish connection with client.
+	print("Got connection from", addr)	
+	print("reading message")	
+	data = conn.recv(1024)
+	msg = repr(data)
+	print (msg)
+	if ( msg == "Android Message " + str(numMes)):
+		print("Got Android Message")
+		bsent = conn.send(("Python Message " + str(numMes) + "\n").encode("UTF-8"))
+		if(bsent == None):		
+			print("message send success") 
+		numMes += 1
+	else:
+		print("Not Android Message")
+	conn.close()
+	time.sleep(.025)

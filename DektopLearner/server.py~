@@ -1,0 +1,31 @@
+import socket               # Import socket module
+import time
+sys.path.append("./F310_Gamepad_Parser/core")
+from logger import Logger
+
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # Create a socket object
+host = "192.168.0.29" # Get local machine IP
+port = 9999                # Reserve a port for your service.
+soc.bind((host, port))       # Bind to the port
+soc.listen(5)                 # Now wait for client connection.
+
+log = Logger()
+
+while True:
+	conn, addr = soc.accept()     # Establish connection with client.
+	print("Got connection from", addr)	
+
+	print("reading message")	
+	msg = conn.recv(1024)
+	log.log(msg)	
+	#print (msg)
+	leftMotorPower = states['LJ/Up'] + states['LJ/Down']
+	rightMotorPower = states['RJ/Up'] + states['RJ/Down']
+	log.log(msg + "," + str(leftMotorPower) + "," + str(rightMotorPower))	
+	bsent = conn.send(("L" + str(leftMotorPower) + "R" + str(rightMotorPower) + "\n").encode("UTF-8"))
+	if(bsent == None):		
+		print("message send success") 
+	else:
+		print("Not Android Message")
+
+	conn.close()

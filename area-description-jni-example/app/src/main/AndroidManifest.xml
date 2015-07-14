@@ -18,7 +18,7 @@
             android:required="true" />
         <activity
             android:label="@string/menu_name"
-            android:name="com.projecttango.experiments.nativearealearning.StartActivity"
+            android:name="robot.tango.StartActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,15 +30,16 @@
                 android:resource="@xml/device_filter"/>
         </activity>
         <activity
-            android:name="com.projecttango.experiments.nativearealearning.AreaDescriptionActivity"
+            android:name="robot.tango.AreaDescriptionActivity"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name="com.projecttango.experiments.nativearealearning.ADFUUIDListViewActivity"
+            android:name="robot.tango.ADFUUIDListViewActivity"
             android:screenOrientation="landscape">
         </activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

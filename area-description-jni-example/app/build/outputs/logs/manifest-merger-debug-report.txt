@@ -38,7 +38,7 @@ ADDED from AndroidManifest.xml:16:9
 		ADDED from AndroidManifest.xml:18:13
 	android:name
 		ADDED from AndroidManifest.xml:17:13
-activity#com.projecttango.experiments.nativearealearning.StartActivity
+activity#robot.tango.StartActivity
 ADDED from AndroidManifest.xml:19:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:22:13
@@ -66,13 +66,13 @@ ADDED from AndroidManifest.xml:28:13
 		ADDED from AndroidManifest.xml:30:17
 	android:name
 		ADDED from AndroidManifest.xml:29:17
-activity#com.projecttango.experiments.nativearealearning.AreaDescriptionActivity
+activity#robot.tango.AreaDescriptionActivity
 ADDED from AndroidManifest.xml:32:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:34:13
 	android:name
 		ADDED from AndroidManifest.xml:33:13
-activity#com.projecttango.experiments.nativearealearning.ADFUUIDListViewActivity
+activity#robot.tango.ADFUUIDListViewActivity
 ADDED from AndroidManifest.xml:36:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:38:13
@@ -86,3 +86,7 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:42:5
 	android:name
 		ADDED from AndroidManifest.xml:42:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:43:5
+	android:name
+		ADDED from AndroidManifest.xml:43:22
