@@ -1,0 +1,2 @@
+include ':app', ':usbSerialForAndroid', ':TangoSDK_Ramanujan_Java'
+include ':openCVLibrary2411'

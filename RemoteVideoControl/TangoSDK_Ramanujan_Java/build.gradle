@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('TangoSDK_Ramanujan_Java.jar'))

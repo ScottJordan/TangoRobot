@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/RemoteVideoControl.iml" filepath="$PROJECT_DIR$/RemoteVideoControl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TangoSDK_Ramanujan_Java/TangoSDK_Ramanujan_Java.iml" filepath="$PROJECT_DIR$/TangoSDK_Ramanujan_Java/TangoSDK_Ramanujan_Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCVLibrary2411/openCVLibrary2411.iml" filepath="$PROJECT_DIR$/openCVLibrary2411/openCVLibrary2411.iml" />
+      <module fileurl="file://$PROJECT_DIR$/usbSerialForAndroid/usbSerialForAndroid.iml" filepath="$PROJECT_DIR$/usbSerialForAndroid/usbSerialForAndroid.iml" />
+    </modules>
+  </component>
+</project>
